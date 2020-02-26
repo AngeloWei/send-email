@@ -22,16 +22,16 @@ import java.util.Properties;
 @EnableScheduling
 public class SendEmail {
 
-    private  static String key="hibopnhxdnvzebgg" ;
+    private  static String key="elkzmzoeglcvbahf" ;
 
     private  String filePath="/home/centos/sql_result";
 
-    private String sender="2502430756@qq.com";
+    private String sender="695515832@qq.com";
 
-    private String receiver="453214795@qq.com";
+    private String receiver="1205110565@qq.com";
 
     private  Logger log = LoggerFactory.getLogger(this.getClass());
-    @Scheduled(cron = "5 0/10 * * * ? ")
+    @Scheduled(cron = "5 33 1/4 * * ? ")
     public void sendEmail() throws Exception {
         log.info("开始执行send....");
         Properties prop = new Properties();
