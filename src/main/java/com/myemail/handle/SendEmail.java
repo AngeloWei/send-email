@@ -64,6 +64,7 @@ public class SendEmail {
         //创建邮件对象
         MimeMessage message = complexEmail(session, filePath);
         if (message == null) {
+            log.info("执行结束,没有附件...");
             return;
         }
         //2、通过session得到transport对象
