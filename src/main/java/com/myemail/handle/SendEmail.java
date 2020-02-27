@@ -3,7 +3,7 @@ package com.myemail.handle;
 import com.sun.mail.util.MailSSLSocketFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -24,11 +24,11 @@ public class SendEmail {
 
     private  static String key="elkzmzoeglcvbahf" ;
 
-    private  String filePath="/home/centos/sql_result";
+    private final static String filePath="/home/centos/sql_result";
 
-    private String sender="695515832@qq.com";
+    private static String sender="695515832@qq.com";
 
-    private String receiver="1205110565@qq.com";
+    private final static String receiver="1205110565@qq.com";
 
     private  Logger log = LoggerFactory.getLogger(this.getClass());
     @Scheduled(cron = "5 31 * * * ? ")
@@ -80,7 +80,7 @@ public class SendEmail {
 
     }
 
-    public  MimeMessage complexEmail(Session session,String filePath) throws MessagingException {
+    private   MimeMessage complexEmail(Session session,String filePath) throws MessagingException {
         //消息的固定信息
         MimeMessage mimeMessage = new MimeMessage(session);
 
