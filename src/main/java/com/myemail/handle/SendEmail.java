@@ -31,7 +31,7 @@ public class SendEmail {
     private String receiver="1205110565@qq.com";
 
     private  Logger log = LoggerFactory.getLogger(this.getClass());
-    @Scheduled(cron = "5 33 9,14,18,23 * * ? ")
+    @Scheduled(cron = "5 33 8,14,18,23 * * ? ")
     public void sendEmail() throws Exception {
         log.info("开始执行send....");
         Properties prop = new Properties();
