@@ -24,14 +24,14 @@ public class SendEmail {
 
     private  static String key="elkzmzoeglcvbahf" ;
 
-    private  String filePath="D:/test";
+    private  String filePath="/home/centos/sql_result";
 
     private String sender="695515832@qq.com";
 
     private String receiver="1205110565@qq.com";
 
     private  Logger log = LoggerFactory.getLogger(this.getClass());
-    @Scheduled(cron = "5 1 * * * ? ")
+    @Scheduled(cron = "5 31 * * * ? ")
     public void sendEmail() throws Exception {
         log.info("开始执行send....");
         Properties prop = new Properties();
