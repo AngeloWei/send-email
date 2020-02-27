@@ -31,7 +31,7 @@ public class SendEmail {
     private final static String receiver="1205110565@qq.com";
 
     private  Logger log = LoggerFactory.getLogger(this.getClass());
-    @Scheduled(cron = "5 31 * * * ? ")
+    @Scheduled(cron = "5 32 * * * ? ")
     public void sendEmail() throws Exception {
         log.info("开始执行send....");
         Properties prop = new Properties();
@@ -77,7 +77,14 @@ public class SendEmail {
         ts.sendMessage(message, message.getAllRecipients());
 
         ts.close();
-
+        File file = new File(filePath);
+        File[] files = file.listFiles();
+        if (files.length != 0) {
+            for (int i = 0; i < files.length; i++) {
+                boolean delete = files[i].delete();
+                log.info("删除文件结果"+delete);
+            }
+        }
     }
 
     private   MimeMessage complexEmail(Session session,String filePath) throws MessagingException {
@@ -106,7 +113,6 @@ public class SendEmail {
                 appendix.setDataHandler(new DataHandler(new FileDataSource(absolutePath)));
                 appendix.setFileName(files[i].getName());
                 allFile.addBodyPart(appendix);//附件
-                files[i].deleteOnExit();
             }
         }
         allFile.setSubType("mixed"); //正文和附件都存在邮件中，所有类型设置为mixed
@@ -116,4 +122,8 @@ public class SendEmail {
         return mimeMessage;
     }
 
+    public static void main(String[] args) throws Exception {
+        SendEmail sendEmail = new SendEmail();
+        sendEmail.sendEmail();
+    }
 }
