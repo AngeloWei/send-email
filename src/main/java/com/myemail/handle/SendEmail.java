@@ -24,14 +24,14 @@ public class SendEmail {
 
     private  static String key="elkzmzoeglcvbahf" ;
 
-    private  String filePath="/home/centos/sql_result";
+    private  String filePath="D:/test";
 
     private String sender="695515832@qq.com";
 
     private String receiver="1205110565@qq.com";
 
     private  Logger log = LoggerFactory.getLogger(this.getClass());
-    @Scheduled(cron = "5 33 8,14,18,23 * * ? ")
+    @Scheduled(cron = "5 1 * * * ? ")
     public void sendEmail() throws Exception {
         log.info("开始执行send....");
         Properties prop = new Properties();
@@ -61,6 +61,11 @@ public class SendEmail {
         //开启Session的debug模式，这样就可以查看到程序发送Email的运行状态
         session.setDebug(true);
 
+        //创建邮件对象
+        MimeMessage message = complexEmail(session, filePath);
+        if (message == null) {
+            return;
+        }
         //2、通过session得到transport对象
         Transport ts = session.getTransport();
 
@@ -68,14 +73,10 @@ public class SendEmail {
         ts.connect("smtp.qq.com", sender, key);
 
         //4、创建邮件
-
-        //创建邮件对象
-        MimeMessage message = complexEmail(session, filePath);
-
-        //5、发送邮件
         ts.sendMessage(message, message.getAllRecipients());
 
         ts.close();
+
     }
 
     public  MimeMessage complexEmail(Session session,String filePath) throws MessagingException {
@@ -104,6 +105,7 @@ public class SendEmail {
                 appendix.setDataHandler(new DataHandler(new FileDataSource(absolutePath)));
                 appendix.setFileName(files[i].getName());
                 allFile.addBodyPart(appendix);//附件
+                files[i].deleteOnExit();
             }
         }
         allFile.setSubType("mixed"); //正文和附件都存在邮件中，所有类型设置为mixed
